@@ -1,0 +1,13 @@
+.loading{
+  display: flex;
+  justify-content: center;
+}
+
+.imgPoke{
+  width: 100px;
+  height: 100px;
+}
+
+.pagination{
+  justify-content: center
+}
