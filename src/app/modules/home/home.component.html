@@ -1,4 +1,11 @@
-<div *ngIf="loading">
+<div *ngIf="loading" class="m-5">
+  <select (change)="selectPage()" class="form-select" id="selectPage">
+    <option selected>Tamaño de página: {{ tamPag }}</option>
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+  </select>
+
   <table class="table table-hover">
     <thead>
       <tr>
