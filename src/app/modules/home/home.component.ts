@@ -10,20 +10,35 @@ import { HomeService } from './home.service';
 export class HomeComponent implements OnInit {
   public pokemons: Array<pokemonModel>;
   public loading: boolean;
+  public initPag: number;
+  public limit: number;
+  public tamPag: number;
   constructor(private _service: HomeService) {
     this.loading = false;
     this.pokemons = [];
+    this.initPag = 0;
+    this.limit = 5;
+    this.tamPag = 5;
   }
 
   ngOnInit(): void {
-    this.getPokemons();
+    this.getPokemons(this.initPag, this.limit);
   }
 
-  private getPokemons(init: number = 0, end: number = 5): void {
-    this._service.getPokemons(init, end).then((data) => {
+  private getPokemons(init: number, limit: number = this.limit): void {
+    this._service.getPokemons(init, limit).then((data) => {
       this.pokemons = data;
-      console.log(data);
       this.loading = true;
     });
+  }
+
+  public pagSiguiente() {
+    this.loading = false;
+    this.initPag += this.tamPag;
+    this.getPokemons(this.initPag);
+  }
+
+  public pagAnterior() {
+    console.log('anterior');
   }
 }

@@ -9,12 +9,12 @@ export class HomeService {
   constructor(private _http: HttpService) {}
 
   public getPokemons(
-    init: number = 0,
-    end: number = 5
+    init: number,
+    limit: number
   ): Promise<Array<pokemonModel>> {
     let pokemons: Array<pokemonModel> = [];
     return new Promise((resolve) => {
-      this._http.getListPokemons(init, end).then((data) => {
+      this._http.getListPokemons(init, limit).then((data) => {
         data.results.forEach((pokemon) => {
           this._http.getPokemon(pokemon.url).then((pokemonData) => {
             pokemons.push(pokemonData);

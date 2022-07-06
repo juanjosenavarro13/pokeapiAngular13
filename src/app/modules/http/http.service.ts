@@ -8,8 +8,8 @@ export class HttpService {
   constructor() {}
 
   public getListPokemons(
-    init: number = 0,
-    end: number = 5
+    init: number,
+    end: number
   ): Promise<getListPokemonsModel> {
     return new Promise((resolve) => {
       fetch(
