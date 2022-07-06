@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { pokemonModel } from '../http/httpModels';
 import { HomeService } from './home.service';
+import { buscadorModel } from './homeModels';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,15 @@ export class HomeComponent implements OnInit {
   public loading: boolean;
   public initPag: number;
   public tamPag: number;
+  private initBuscador: boolean;
+  public namePokemons: Array<buscadorModel>;
   constructor(private _service: HomeService) {
     this.loading = false;
     this.pokemons = [];
     this.initPag = 0;
     this.tamPag = 5;
+    this.initBuscador = true;
+    this.namePokemons = [];
   }
 
   ngOnInit(): void {
@@ -27,6 +32,10 @@ export class HomeComponent implements OnInit {
     this._service.getPokemons(init, limit).then((data) => {
       this.pokemons = data;
       this.loading = true;
+      if (this.initBuscador) {
+        this.buscadorPokemon();
+        this.initBuscador = false;
+      }
     });
   }
 
@@ -48,5 +57,13 @@ export class HomeComponent implements OnInit {
     let limit = Number($('#selectPage option:selected').val());
     this.tamPag = limit;
     this.getPokemons(this.initPag, limit);
+  }
+
+  public buscadorPokemon() {
+    this._service
+      .getNamePokemon(0, this._service.totalPokemons)
+      .then((data) => {
+        this.namePokemons = data;
+      });
   }
 }

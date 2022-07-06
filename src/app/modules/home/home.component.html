@@ -1,17 +1,37 @@
-<div *ngIf="loading" class="m-5">
-  <select (change)="selectPage()" class="form-select" id="selectPage">
-    <option selected>Tamaño de página: {{ tamPag }}</option>
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="20">20</option>
-  </select>
-
+<div class="row mx-5 mt-3">
+  <div class="col-sm-6 col-md-4 col-xl-3 mb-2">
+    <!-- buscador -->
+    <input
+      class="form-control"
+      list="pokebuscador"
+      id="exampleDataList"
+      placeholder="Busca tu pokemon"
+    />
+    <datalist id="pokebuscador">
+      <option *ngFor="let poke of namePokemons" value="{{ poke.name }}">
+        {{ poke.id }}
+      </option>
+    </datalist>
+  </div>
+  <div class="col-sm-6 col-md-4 col-xl-3 mb-2">
+    <!-- selector de pagina -->
+    <select (change)="selectPage()" class="form-select" id="selectPage">
+      <option selected>Tamaño de página: {{ tamPag }}</option>
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="loading" class="mx-5">
+  <!-- tabla -->
   <table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Imagen</th>
+        <th scope="col">Imagen Frontal</th>
+        <th scope="col">Imagen Trasera</th>
       </tr>
     </thead>
     <tbody>
@@ -25,9 +45,17 @@
             alt="{{ poke.name }}"
           />
         </td>
+        <td>
+          <img
+            class="imgPoke"
+            src="{{ poke.sprites.back_default }}"
+            alt="{{ poke.name }}"
+          />
+        </td>
       </tr>
     </tbody>
   </table>
+  <!-- paginacion -->
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item" *ngIf="initPag > 0">
@@ -40,6 +68,7 @@
   </nav>
 </div>
 
+<!-- spinner -->
 <div class="loading" *ngIf="!loading">
   <img src="../../../assets/images/spinner.gif" />
 </div>
