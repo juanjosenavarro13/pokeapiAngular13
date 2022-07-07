@@ -2,24 +2,25 @@
   <div class="col-sm-6 col-md-4 col-xl-3 mb-2">
     <!-- buscador -->
     <input
+      (change)="selectBuscador()"
       class="form-control"
       list="pokebuscador"
-      id="exampleDataList"
+      id="pokebuscadorInput"
       placeholder="Busca tu pokemon"
     />
     <datalist id="pokebuscador">
-      <option *ngFor="let poke of namePokemons" value="{{ poke.name }}">
-        {{ poke.id }}
-      </option>
+      <option
+        *ngFor="let poke of namePokemons"
+        value="{{ poke.name }}[{{ poke.id }}]"
+      ></option>
     </datalist>
   </div>
   <div class="col-sm-6 col-md-4 col-xl-3 mb-2">
     <!-- selector de pagina -->
     <select (change)="selectPage()" class="form-select" id="selectPage">
-      <option selected>Tamaño de página: {{ tamPag }}</option>
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="20">20</option>
+      <option value="5">Tamaño de página: 5</option>
+      <option value="10">Tamaño de página: 10</option>
+      <option value="20">Tamaño de página: 20</option>
     </select>
   </div>
 </div>
@@ -71,4 +72,52 @@
 <!-- spinner -->
 <div class="loading" *ngIf="!loading">
   <img src="../../../assets/images/spinner.gif" />
+</div>
+
+<!-- pokemon individual -->
+<div
+  class="mx-5 mt-3 border border-primary border-3 p-5 mt-4 rounded"
+  *ngIf="pokeIndiLoading"
+>
+  <div class="row">
+    <div class="card col-3 text-center">
+      <img
+        src="{{ pokemonIndividual.sprites.front_default }}"
+        class="card-img-top"
+        alt="{{ pokemonIndividual.name }}"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ pokemonIndividual.name }}</h5>
+        <p class="card-text">Stats de {{ pokemonIndividual.name }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let s of pokemonIndividual.stats">
+            {{ s.stat.name }}: {{ s.base_stat }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card col-9">
+      <div class="card-body">
+        <h5 class="card-title">{{ pokemonIndividual.name }}</h5>
+
+        <div class="row">
+          <div class="col-3">
+            Habilidades:
+            <!-- <ul>
+              <li *ngFor="let m of pokemonIndividual.moves">
+                {{ m.move.name }}
+              </li>
+            </ul> -->
+          </div>
+          <div class="col-6">
+            <p class="card-text">
+              With supporting text below as a natural lead-in to additional
+              content.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

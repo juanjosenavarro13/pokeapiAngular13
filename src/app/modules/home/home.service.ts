@@ -48,4 +48,14 @@ export class HomeService {
       });
     });
   }
+
+  public getIndividualPokemon(id: number): Promise<pokemonModel> {
+    return new Promise((resolve) => {
+      this._http
+        .getPokemon(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        .then((data) => {
+          resolve(data);
+        });
+    });
+  }
 }

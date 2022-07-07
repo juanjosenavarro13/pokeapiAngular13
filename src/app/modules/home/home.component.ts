@@ -15,6 +15,9 @@ export class HomeComponent implements OnInit {
   public tamPag: number;
   private initBuscador: boolean;
   public namePokemons: Array<buscadorModel>;
+  public pokeNameID: number;
+  public pokemonIndividual: pokemonModel;
+  public pokeIndiLoading: boolean;
   constructor(private _service: HomeService) {
     this.loading = false;
     this.pokemons = [];
@@ -22,6 +25,9 @@ export class HomeComponent implements OnInit {
     this.tamPag = 5;
     this.initBuscador = true;
     this.namePokemons = [];
+    this.pokeNameID = 0;
+    this.pokemonIndividual = {} as pokemonModel;
+    this.pokeIndiLoading = false;
   }
 
   ngOnInit(): void {
@@ -65,5 +71,15 @@ export class HomeComponent implements OnInit {
       .then((data) => {
         this.namePokemons = data;
       });
+  }
+  public selectBuscador() {
+    this.pokeNameID = Number(
+      String($('#pokebuscadorInput').val()).split('[')[1].split(']')[0]
+    );
+
+    this._service.getIndividualPokemon(this.pokeNameID).then((data) => {
+      this.pokemonIndividual = data;
+      this.pokeIndiLoading = true;
+    });
   }
 }

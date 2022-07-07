@@ -71,6 +71,10 @@ export class pokemonSpeciesModel {
 }
 
 export class pokemonMovesModel {
+  constructor(public move: movePokemonModel) {}
+}
+
+export class movePokemonModel {
   constructor(public name: string, public url: string) {}
 }
 
